@@ -1,0 +1,6 @@
+namespace framework
+
+class Database {
+
+
+}
