@@ -4,14 +4,20 @@ namespace framework
 
 class Database {
 	
-	public function insert ($cargo, $campos, $dados){
-		$this->executarComando("INSERT INTO {$tabela}(". implode(',',$campos).") VALUES (". implode(',',$dados).");");
+	public function conect($dsn){
 	}
+	private function executeSql($sql){
+	}
+	public function insert ($table, $fields, $datas){
+		$this->executeSql("INSERT INTO {$table}(". implode(',',$fields).") VALUES (". implode(',',$datas).");");
+	}
+	public function update($table, $fields, $datas){
+	}
+	public function delete($table, $id){
+	}
+	public function select($table, $fields, $where){
+	}	
+
 }
 
-$db = new Database($conexao);
-
-$db->insert('cargo', ['nome'], ['Gerente']);
-$db->insert('cargo', ['nome'], ['Administrador']);
-$db->insert('cargo', ['nome'], ['Garçon']);
 ?>
