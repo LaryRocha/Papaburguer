@@ -1,25 +1,29 @@
 <?php
 
-namespace framework
-
 class Database {
 
 	private $cnx;
 
-	public function __construct($dsn){
-		$this->cnx = new PDO($dsn);
+	public function __construct(){
+		global $DB_DSN, $DB_USER, $DB_PASS;
+
+		$this->cnx = new PDO($DB_DSN, $DB_USER,	$DB_PASS);
 	}
 
-	private function executeSql($sql){
+	public function querySql($sql){
 		return $this->cnx->query($sql);
 	}
 
-	public function insert ($table, $fields, $datas){
-		return $this->executeSql("INSERT INTO {$table}(". implode(',',$fields).") VALUES (". implode(',',$datas).");");
+	public function executeSql($sql){
+		return $this->cnx->exec($sql);
+	}
+
+	public function insert($table, $fields, $datas){
+		return $this->executeSql("INSERT INTO {$table}(". implode(',',$fields).") VALUES ('". implode("','",$datas)."');");
 	}
 
 	public function update($table, $fields, $datas, $where){
-		$updateQuery = []
+		$updateQuery = [];
 		foreach($fields as $id => $field){
 			array_push($updateQuery, "{$field} = '{$datas[$id]}'");
 		}
@@ -32,7 +36,7 @@ class Database {
 	}
 
 	public function select($table, $fields, $where){
-		return $this->executeSql("SELECT FROM {$table} $where id = {$id}");
+		return $this->querySql("SELECT FROM {$table} $where id = {$id}");
 	}
 
 }
