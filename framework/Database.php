@@ -5,8 +5,14 @@ namespace framework
 class Database {
 	
 	public function conect($dsn){
+		$conectar = mysql_connect('localhost', 'mysql_user', 'mysql_password'); 
 	}
 	private function executeSql($sql){
+		if(!$conectar){ 
+			die('Não foi possível conectar: ' . mysql_error()); 
+		} 
+		echo 'Conexão bem sucedida'; 
+		mysql_close($conectar);
 	}
 	public function insert ($table, $fields, $datas){
 		$this->executeSql("INSERT INTO {$table}(". implode(',',$fields).") VALUES (". implode(',',$datas).");");
